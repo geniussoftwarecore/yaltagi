@@ -9,7 +9,7 @@ import { ParticipantsList } from '@/components/meeting/ParticipantsList';
 import { DeviceSettings } from '@/components/meeting/DeviceSettings';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { X, MessageCircle, Users, Settings } from 'lucide-react';
+import { X, MessageCircle, Users, Settings, Mic, MicOff } from 'lucide-react';
 
 export function MeetingRoomPage() {
   const { id: roomId } = useParams();
@@ -30,6 +30,8 @@ export function MeetingRoomPage() {
     startScreenShare,
     stopScreenShare
   } = useWebRTC();
+  
+  const { isMuted, isCameraOn, isScreenSharing } = useAppStore();
 
   useEffect(() => {
     if (roomId) {
@@ -42,10 +44,7 @@ export function MeetingRoomPage() {
   }, [roomId, startCall, endCall]);
 
   const handleToggleScreenShare = async () => {
-    const { isScreenSharing } = await import('@/store/useAppStore');
-    const store = useAppStore.getState();
-    
-    if (store.isScreenSharing) {
+    if (isScreenSharing) {
       stopScreenShare();
     } else {
       await startScreenShare();
@@ -67,58 +66,29 @@ export function MeetingRoomPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 relative">
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-40 bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="absolute top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-sm border-b">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <h1 className="text-xl font-semibold">
-                {t('meeting.room')} {roomId}
-              </h1>
+              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">Y</span>
+              </div>
+              <span className="font-semibold text-gray-800">Yaltaqi</span>
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`} />
-                <span className="text-sm text-gray-300">
-                  {isConnected ? t('meeting.connected') : t('meeting.connecting')}
+                <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'}`} />
+                <span className="text-sm text-gray-600">
+                  {isConnected ? '5 min' : 'Connecting...'}
                 </span>
               </div>
             </div>
             
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              {/* Chat Toggle */}
-              <Button
-                onClick={() => setShowChat(!showChat)}
-                variant={showChat ? "primary" : "secondary"}
-                size="icon"
-                className="w-10 h-10"
-              >
-                <MessageCircle className="w-5 h-5" />
-              </Button>
-              
-              {/* Participants Toggle */}
-              <Button
-                onClick={() => setShowParticipants(!showParticipants)}
-                variant={showParticipants ? "primary" : "secondary"}
-                size="icon"
-                className="w-10 h-10 relative"
-              >
-                <Users className="w-5 h-5" />
-                {participants.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-primary-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {participants.length + 1}
-                  </span>
-                )}
-              </Button>
-              
-              {/* Settings Toggle */}
-              <Button
-                onClick={() => setShowSettings(!showSettings)}
-                variant={showSettings ? "primary" : "secondary"}
-                size="icon"
-                className="w-10 h-10"
-              >
-                <Settings className="w-5 h-5" />
-              </Button>
+            <div className="flex items-center space-x-4 text-gray-500">
+              <span className="text-sm">الغرف الفرعية</span>
+              <span className="text-sm">المراسلة</span>
+              <span className="text-sm">التسجيل</span>
+              <div className="w-6 h-1 bg-gray-300 rounded-full"></div>
             </div>
           </div>
         </div>
@@ -127,45 +97,86 @@ export function MeetingRoomPage() {
       {/* Main Content */}
       <div className="flex h-screen pt-20">
         {/* Video Grid */}
-        <div className="flex-1 flex flex-col">
-          <VideoGrid 
-            localStream={localStream} 
-            participants={participants} 
-          />
+        <div className="flex-1 p-6">
+          <div className="bg-white rounded-3xl shadow-xl p-6 h-full">
+            <VideoGrid 
+              localStream={localStream} 
+              participants={participants} 
+            />
+          </div>
         </div>
 
         {/* Right Sidebar */}
-        {(showChat || showParticipants || showSettings) && (
-          <div className="w-80 bg-white text-gray-900 border-l border-gray-300 flex flex-col">
+        <div className="w-80 p-6 pl-0">
+          <div className="bg-white rounded-3xl shadow-xl h-full flex flex-col">
             {/* Sidebar Header */}
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="font-semibold">
-                {showChat && t('meeting.chat')}
-                {showParticipants && t('meeting.participants')}
-                {showSettings && t('meeting.settings')}
-              </h3>
-              <Button
-                onClick={() => {
-                  setShowChat(false);
-                  setShowParticipants(false);
-                  setShowSettings(false);
-                }}
-                variant="ghost"
-                size="icon"
-                className="w-8 h-8"
-              >
-                <X className="w-4 h-4" />
-              </Button>
+            <div className="p-6 border-b border-gray-200">
+              <h3 className="font-semibold text-gray-800 text-right">المشاركون</h3>
+              <p className="text-sm text-gray-500 text-right mt-1">
+                {participants.length + 1} مشارك
+              </p>
             </div>
 
-            {/* Sidebar Content */}
-            <div className="flex-1 overflow-hidden">
-              {showChat && <Chat roomId={roomId || ''} />}
-              {showParticipants && <ParticipantsList participants={participants} />}
-              {showSettings && <DeviceSettings />}
+            {/* Participants List */}
+            <div className="flex-1 p-6 overflow-y-auto">
+              {/* Host */}
+              <div className="flex items-center space-x-3 mb-4 p-3 bg-teal-50 rounded-xl">
+                <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-medium text-sm">أ</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-800">أحمد محمد</p>
+                  <p className="text-xs text-teal-600">المضيف</p>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Mic className="w-4 h-4 text-teal-500" />
+                </div>
+              </div>
+
+              {/* Other participants */}
+              {participants.map((participant) => (
+                <div key={participant.id} className="flex items-center space-x-3 mb-3 p-3 hover:bg-gray-50 rounded-xl">
+                  <div className="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center">
+                    <span className="text-white font-medium text-sm">
+                      {participant.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-800">{participant.name}</p>
+                    <p className="text-xs text-gray-500">مشارك</p>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Mic className="w-4 h-4 text-gray-400" />
+                  </div>
+                </div>
+              ))}
+
+              {/* You */}
+              <div className="flex items-center space-x-3 mb-3 p-3 bg-blue-50 rounded-xl">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-medium text-sm">أ</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-800">أنت</p>
+                  <p className="text-xs text-blue-600">مشارك</p>
+                </div>
+                <div className="flex items-center space-x-1">
+                  {isMuted ? <MicOff className="w-4 h-4 text-red-500" /> : <Mic className="w-4 h-4 text-blue-500" />}
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar Actions */}
+            <div className="p-6 border-t border-gray-200">
+              <Button
+                onClick={() => setShowParticipants(!showParticipants)}
+                className="w-full bg-teal-500 hover:bg-teal-600 text-white rounded-xl py-3"
+              >
+                دعوة الآخرين
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Meeting Controls */}

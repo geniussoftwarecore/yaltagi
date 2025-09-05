@@ -5,10 +5,10 @@
 
 @layer base {
   :root {
-    /* Yaltaqi Brand Colors */
-    --color-sky-blue: #CFEAFF;
-    --color-primary-blue: #1E3A8A;
-    --color-green-cta: #22C55E;
+    /* Yaltaqi Brand Colors - Updated to Teal Theme */
+    --color-sky-blue: #F0FDFA;
+    --color-primary-blue: #14B8A6;
+    --color-green-cta: #14B8A6;
     --color-white: #FFFFFF;
     --color-gray-light: #F8FAFC;
     --color-gray-medium: #64748B;

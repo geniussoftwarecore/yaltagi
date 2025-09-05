@@ -9,6 +9,7 @@ import { LandingPage } from '@/pages/LandingPage';
 import { CreateMeetingPage } from '@/pages/CreateMeetingPage';
 import { JoinMeetingPage } from '@/pages/JoinMeetingPage';
 import { MeetingRoomPage } from '@/pages/MeetingRoomPage';
+import { Whiteboard } from '@/components/meeting/Whiteboard';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 function App() {
@@ -29,6 +30,11 @@ function App() {
           {/* Meeting Room - Full Screen */}
           <Route path="/room/:id">
             <MeetingRoomPage />
+          </Route>
+          
+          {/* Whiteboard - Full Screen */}
+          <Route path="/whiteboard/:id">
+            <Whiteboard roomId="" />
           </Route>
           
           {/* Other Pages with Layout */}

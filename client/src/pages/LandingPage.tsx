@@ -21,27 +21,21 @@ export function LandingPage() {
   const features = [
     {
       icon: Video,
-      title: t('features.hdVideo.title'),
-      description: t('features.hdVideo.description'),
-      color: 'text-blue-600'
+      title: 'HD Video',
+      description: 'High quality video calls',
+      color: 'text-teal-600'
     },
     {
       icon: Monitor,
-      title: t('features.screenShare.title'),
-      description: t('features.screenShare.description'),
-      color: 'text-green-600'
+      title: 'Screen Sharing',
+      description: 'Share your screen',
+      color: 'text-teal-600'
     },
     {
       icon: MessageCircle,
-      title: t('features.chat.title'),
-      description: t('features.chat.description'),
-      color: 'text-purple-600'
-    },
-    {
-      icon: Users,
-      title: t('features.breakout.title'),
-      description: t('features.breakout.description'),
-      color: 'text-orange-600'
+      title: 'Chat',
+      description: 'Real-time messaging',
+      color: 'text-teal-600'
     }
   ];
 
@@ -67,150 +61,76 @@ export function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-sky-blue/30 via-white to-green-cta/20 pt-24 pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold text-primary-blue mb-6 leading-tight">
-              {t('landing.hero.title')}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              {t('landing.hero.subtitle')}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/create">
-                <Button 
-                  variant="cta" 
-                  size="xl" 
-                  className="text-lg px-8 py-4 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
-                >
-                  {t('landing.hero.cta')}
-                  <ArrowRight className="ml-2 h-6 w-6 rtl:rotate-180" />
-                </Button>
-              </Link>
-              
-              <Link href="/join">
-                <Button 
-                  variant="outline" 
-                  size="xl" 
-                  className="text-lg px-8 py-4 hover:shadow-xl transition-all duration-300"
-                >
-                  {t('landing.hero.joinMeeting')}
-                </Button>
-              </Link>
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center p-8">
+      {/* Main Card Container */}
+      <div className="bg-white rounded-3xl shadow-2xl p-12 max-w-md w-full mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">Y</span>
             </div>
+            <span className="font-semibold text-gray-800">Yaltaqi</span>
+          </div>
+          <div className="flex items-center space-x-2 text-gray-500">
+            <span className="text-sm">الرئيسية</span>
+            <span className="text-sm">الاعدادات</span>
+            <span className="text-sm">دعم</span>
+            <div className="w-6 h-1 bg-gray-300 rounded-full"></div>
           </div>
         </div>
-        
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-primary-blue/10 to-transparent rounded-full -translate-x-32 -translate-y-32"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-green-cta/10 to-transparent rounded-full translate-x-48 translate-y-48"></div>
-      </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-blue mb-4">
-              {t('features.title')}
-            </h2>
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">ابدأ اجتماع</h1>
+          <div className="flex justify-center mb-6">
+            <ArrowRight className="w-6 h-6 text-teal-500 rotate-45" />
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
-                <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg">
-                  <CardHeader className="text-center pb-4">
-                    <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className={`w-8 h-8 ${feature.color}`} />
+        </div>
+
+        {/* Main CTA Button */}
+        <div className="mb-8">
+          <Link href="/create">
+            <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105">
+              انضم الآن
+            </Button>
+          </Link>
+        </div>
+
+        {/* Or Divider */}
+        <div className="text-center text-gray-400 mb-8 relative">
+          <div className="absolute inset-x-0 top-1/2 h-px bg-gray-200"></div>
+          <span className="px-4 bg-white relative">Or</span>
+        </div>
+
+        {/* Feature Cards */}
+        <div className="grid grid-cols-3 gap-4">
+          {features.map((feature, index) => {
+            const IconComponent = feature.icon;
+            return (
+              <div key={index} className="group">
+                <Card className="p-4 hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-2xl">
+                  <div className="text-center">
+                    <div className="w-12 h-12 mx-auto mb-3 bg-teal-50 rounded-xl flex items-center justify-center group-hover:bg-teal-100 transition-colors">
+                      <IconComponent className="w-6 h-6 text-teal-500" />
                     </div>
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-center text-gray-600 leading-relaxed">
-                      {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-blue mb-4">
-              {t('howItWorks.title')}
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {steps.map((step, index) => {
-              const IconComponent = step.icon;
-              return (
-                <div key={index} className="text-center relative">
-                  {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary-blue text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
+                    <CardTitle className="text-sm font-medium text-gray-700">{feature.title}</CardTitle>
                   </div>
-                  
-                  <Card className="pt-8 hover:shadow-xl transition-all duration-300">
-                    <CardHeader className="text-center">
-                      <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-4`}>
-                        <IconComponent className={`w-8 h-8 ${step.color}`} />
-                      </div>
-                      <CardTitle className="text-xl">{step.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-center text-gray-600 leading-relaxed">
-                        {step.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  
-                  {/* Arrow between steps */}
-                  {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-gray-300">
-                      <ArrowRight className="w-8 h-8 rtl:rotate-180" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                </Card>
+              </div>
+            );
+          })}
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-blue to-green-cta">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            {t('landing.hero.cta')}
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            {t('landing.hero.subtitle')}
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/create">
-              <Button 
-                variant="secondary" 
-                size="xl" 
-                className="text-lg px-8 py-4 bg-white text-primary-blue hover:bg-gray-100 shadow-xl hover:shadow-2xl"
-              >
-                {t('landing.hero.cta')}
-                <CheckCircle className="ml-2 h-6 w-6" />
-              </Button>
-            </Link>
-          </div>
+        {/* Bottom Link */}
+        <div className="text-center mt-8">
+          <Link href="/join">
+            <button className="text-teal-500 hover:text-teal-600 text-sm font-medium underline">
+              Send invite
+            </button>
+          </Link>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
