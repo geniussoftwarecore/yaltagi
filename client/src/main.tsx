@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import App from './App.tsx';
-import './index.css';
+import './styles/globals.css';
+import './lib/i18n';
 
 // Create a client
 const queryClient = new QueryClient({
