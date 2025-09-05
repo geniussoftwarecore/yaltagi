@@ -326,6 +326,82 @@
   height: 300px;
 }
 
+/* Advanced Animation Extensions */
+@keyframes shrinkWidth {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes slideOutRight {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Meeting-specific animations */
+.video-tile-entering {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.video-tile-leaving {
+  animation: slideOutRight 0.4s ease-in;
+}
+
+.connection-pulse {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.recording-indicator {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Network quality indicators */
+.quality-excellent {
+  color: #10b981;
+  animation: breathe 2s ease-in-out infinite;
+}
+
+.quality-good {
+  color: #3b82f6;
+}
+
+.quality-fair {
+  color: #f59e0b;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.quality-poor {
+  color: #ef4444;
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+/* Interactive states */
+.btn-connecting {
+  background: linear-gradient(-45deg, #14b8a6, #06b6d4, #10b981, #14b8a6);
+  background-size: 400% 400%;
+  animation: gradientShift 2s ease infinite;
+}
+
+.btn-recording {
+  background: linear-gradient(-45deg, #ef4444, #dc2626, #b91c1c, #ef4444);
+  background-size: 400% 400%;
+  animation: gradientShift 1s ease infinite;
+}
+
 /* Meeting Room Specific */
 .video-container {
   position: relative;
